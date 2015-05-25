@@ -8,11 +8,11 @@ The sniper and auction users have been created as needed for the book.
 = Instructions
 Requires Boot2Docker. (Edit configuration in build.gradle to use another docker setup)
 
-== Create Containers
+== Create Images
  
  ./gradlew buildImage
 
-Creates a container 'tma/goos-openfire'.
+Creates an image 'tma/goos-openfire'.
 
 This might take a while first time.
 
@@ -22,3 +22,12 @@ This might take a while first time.
 
 *Note*: `buildImage`, `createConainter` and `startContainer` must be run in that order. But there are no dependencies between them.
 
+== How to use
+
+After creating the image and starting the container the server should be ready to use:
+
+Configurate FakeAuctionServer.java
+
+	public static final String XMPP_HOSTNAME = "192.168.59.103";
+
+And let the tests run. and fail :-P
