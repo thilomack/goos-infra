@@ -1,0 +1,44 @@
+buildscript {
+    repositories {
+        jcenter()
+    }
+
+    dependencies {
+        classpath 'com.bmuschko:gradle-docker-plugin:2.4'
+    }
+}
+
+import com.bmuschko.gradle.docker.tasks.*
+import com.bmuschko.gradle.docker.tasks.image.*
+
+repositories {
+    mavenCentral()
+}
+
+apply plugin: 'com.bmuschko.docker-remote-api'
+
+docker {
+	url = 'https://192.168.59.103:2376'
+	certPath = new File(System.properties['user.home'], '.boot2docker/certs/boot2docker-vm')
+}
+
+task dockerInfo(type: DockerInfo)
+
+
+task createDockerfile(type: Dockerfile) {
+	destFile = project.file("$buildDir/mydockerfile/Dockerfile")
+	from 'java:8'
+	runCommand 'apt-get update && apt-get install wget'
+	//runCommand "wget 'http://www.igniterealtime.org/downloads/download-landing.jsp?file=openfire/openfire_3_6_0a.tar.gz' "
+	runCommand "wget 'http://www.igniterealtime.org/downloadServlet?filename=openfire/openfire_3_6_0a.tar.gz' -O openfire_3_6_0a.tar.gz "
+	runCommand 'tar xzf openfire_3_6_0a.tar.gz'
+	defaultCommand '/usr/bin/java -server -DopenfireHome=/openfire -Dopenfire.lib.dir=/openfire/lib -jar /openfire/lib/startup.jar'.split()
+	exposePort 7070, 9090
+}
+
+task buildImage(type: DockerBuildImage) {
+	dependsOn createDockerfile
+	inputDir = createDockerfile.destFile.parentFile
+	tag = 'tma/goos-openfire'
+}
+

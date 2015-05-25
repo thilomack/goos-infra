@@ -1,0 +1,14 @@
+= Contents
+OpenFire server for the GOOS example es docker container.
+
+= Instructions
+Requires Boot2Docker. (Edit configuration in build.gradle to use another docker setup)
+
+== Create Containers
+ ./gradlew buildImage
+Creates a container 'tma/goos-openfire'.
+This might take a while first time.
+
+== Start Containers
+*ToDo*
+
