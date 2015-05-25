@@ -9,7 +9,9 @@ Requires Boot2Docker. (Edit configuration in build.gradle to use another docker 
 
 == Create Containers
  ./gradlew buildImage
+
 Creates a container 'tma/goos-openfire'.
+
 This might take a while first time.
 
 == Start Containers
