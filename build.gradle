@@ -41,8 +41,9 @@ task createDockerfile(type: Dockerfile) {
 	runCommand "wget 'http://www.igniterealtime.org/downloadServlet?filename=openfire/openfire_3_6_0a.tar.gz' -O openfire_3_6_0a.tar.gz "
 	runCommand 'tar xzf openfire_3_6_0a.tar.gz'
 	copyFile 'openfire.xml', '/openfire/conf/openfire.xml'
-	defaultCommand '/usr/bin/java -server -DopenfireHome=/openfire -Dopenfire.lib.dir=/openfire/lib -jar /openfire/lib/startup.jar'.split()
-	exposePort 7070, 9090
+	copyFile 'entrypoint.sh', '/entrypoint.sh'
+	defaultCommand 'sh -ex /entrypoint.sh'.split()
+	exposePort 5222, 9090
 }
 
 task buildImage(type: DockerBuildImage) {

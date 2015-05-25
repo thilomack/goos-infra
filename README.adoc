@@ -2,6 +2,7 @@
 OpenFire server for the GOOS example es docker container.
 
 Admin console credentials are admin:admin.
+The sniper and auction users have been created as needed for the book.
 
 = Instructions
 Requires Boot2Docker. (Edit configuration in build.gradle to use another docker setup)
@@ -12,5 +13,6 @@ Creates a container 'tma/goos-openfire'.
 This might take a while first time.
 
 == Start Containers
-*ToDo*
+*ToDo*: write task
 
+ docker run --name goos-openfire -p 5222:5222 -p 9090:9090 -d tma/goos-openfire && docker logs -f goos-openfire
