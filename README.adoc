@@ -1,6 +1,8 @@
 = Contents
 OpenFire server for the GOOS example es docker container.
 
+Admin console credentials are admin:admin.
+
 = Instructions
 Requires Boot2Docker. (Edit configuration in build.gradle to use another docker setup)
 

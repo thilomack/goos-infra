@@ -22,21 +22,31 @@ docker {
 	certPath = new File(System.properties['user.home'], '.boot2docker/certs/boot2docker-vm')
 }
 
+ext {
+	dockerBaseDir = file("$buildDir/docker").absolutePath
+}
+
 task dockerInfo(type: DockerInfo)
 
+task copySrcFiles(type: Copy) {
+	from 'src'
+	into dockerBaseDir
+}
 
 task createDockerfile(type: Dockerfile) {
-	destFile = project.file("$buildDir/mydockerfile/Dockerfile")
+	destFile = project.file("$dockerBaseDir/Dockerfile")
 	from 'java:8'
 	runCommand 'apt-get update && apt-get install wget'
 	//runCommand "wget 'http://www.igniterealtime.org/downloads/download-landing.jsp?file=openfire/openfire_3_6_0a.tar.gz' "
 	runCommand "wget 'http://www.igniterealtime.org/downloadServlet?filename=openfire/openfire_3_6_0a.tar.gz' -O openfire_3_6_0a.tar.gz "
 	runCommand 'tar xzf openfire_3_6_0a.tar.gz'
+	copyFile 'openfire.xml', '/openfire/conf/openfire.xml'
 	defaultCommand '/usr/bin/java -server -DopenfireHome=/openfire -Dopenfire.lib.dir=/openfire/lib -jar /openfire/lib/startup.jar'.split()
 	exposePort 7070, 9090
 }
 
 task buildImage(type: DockerBuildImage) {
+	dependsOn copySrcFiles
 	dependsOn createDockerfile
 	inputDir = createDockerfile.destFile.parentFile
 	tag = 'tma/goos-openfire'
