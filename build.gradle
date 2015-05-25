@@ -10,6 +10,7 @@ buildscript {
 
 import com.bmuschko.gradle.docker.tasks.*
 import com.bmuschko.gradle.docker.tasks.image.*
+import com.bmuschko.gradle.docker.tasks.container.*
 
 repositories {
     mavenCentral()
@@ -45,7 +46,6 @@ task createDockerfile(type: Dockerfile) {
 	defaultCommand 'sh -ex /entrypoint.sh'.split()
 	exposePort 5222, 9090
 }
-
 task buildImage(type: DockerBuildImage) {
 	dependsOn copySrcFiles
 	dependsOn createDockerfile
@@ -53,3 +53,12 @@ task buildImage(type: DockerBuildImage) {
 	tag = 'tma/goos-openfire'
 }
 
+task createContainer(type: DockerCreateContainer) {
+	containerName "goos-openfire"
+	portBindings = "5222:5222"
+	targetImageId { "tma/goos-openfire" }
+}
+
+task startContainer(type: DockerStartContainer) {
+	targetContainerId { "goos-openfire" }
+}

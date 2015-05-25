@@ -18,6 +18,7 @@ This might take a while first time.
 
 == Start Containers
 
-*ToDo*: write task
+ .gradlew createContainer startContainer
 
- docker run --name goos-openfire -p 5222:5222 -p 9090:9090 -d tma/goos-openfire && docker logs -f goos-openfire
+*Note*: `buildImage`, `createConainter` and `startContainer` must be run in that order. But there are no dependencies between them.
+
