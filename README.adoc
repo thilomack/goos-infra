@@ -1,6 +1,6 @@
 = Contents
 
-OpenFire server for the GOOS example es docker container.
+OpenFire server for the GOOS example as docker container.
 
 Admin console credentials are admin:admin.
 The sniper and auction users have been created as needed for the book.
@@ -18,7 +18,7 @@ This might take a while first time.
 
 == Start Containers
 
- .gradlew createContainer startContainer
+ ./gradlew createContainer startContainer
 
 *Note*: `buildImage`, `createConainter` and `startContainer` must be run in that order. But there are no dependencies between them.
 
