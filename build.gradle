@@ -62,3 +62,9 @@ task createContainer(type: DockerCreateContainer) {
 task startContainer(type: DockerStartContainer) {
 	targetContainerId { "goos-openfire" }
 }
+task stopContainer(type: DockerStopContainer) {
+	targetContainerId { "goos-openfire" }
+}
+task removeContainer(type: DockerRemoveContainer) {
+	targetContainerId { "goos-openfire" }
+}
